@@ -43,6 +43,7 @@ def load_data(path: str) -> list:
 def convert(path: str) -> None:
     data = load_data()
 
+
 if __name__ == "__main__":
     path = "data/project-2-at-2023-10-01-12-40-3fd2fd59.json"
     data = load_data(path=path)
