@@ -7,7 +7,8 @@ INPUT_KEY = "input"
 OUTPUT_KEY = "output"
 ANNOTATION_KEY = "annotation"
 
-def set_annotation_as_output(data: list) -> list:
+
+def set_annotation_as_output(data: list[dict]) -> list[dict]:
     """
     qloraで使われるoutput keyにannotation結果を格納
     """
@@ -16,7 +17,8 @@ def set_annotation_as_output(data: list) -> list:
         instance.pop(ANNOTATION_KEY)
     return data
 
-def remove_duplicated_instance(data: list) -> list:
+
+def remove_duplicated_instance(data: list[dict]) -> list[dict]:
     """
     複数人がアノテーションする場合、データの重複が起こる
     同じデータに対して複数人がannotationした場合、最新のものを採用する
@@ -33,15 +35,13 @@ def remove_duplicated_instance(data: list) -> list:
             continue
         data_new.append(instance)
     return data_new
-        
-def load_data(path: str) -> list:
+
+
+def load_data(path: str) -> list[dict]:
     if not os.path.exists(path):
         raise ValueError(f"Error loading dataset: {path}")
     else:
         return json.load(open(path))
-
-def convert(path: str) -> None:
-    data = load_data()
 
 
 if __name__ == "__main__":
@@ -51,4 +51,3 @@ if __name__ == "__main__":
     ret = remove_duplicated_instance(data=data)
     with open(path.replace(".json", "") + "-proc.json", "w") as f:
         json.dump(ret, f, indent=2, ensure_ascii=False)
-    
